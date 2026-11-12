@@ -54,9 +54,9 @@ $prompts = [
     <div class="section wrap">
       <h2 class="h2">Four steps. We walk them with you.</h2>
       <div class="steps">
-        <div class="step"><p class="step-title">We listen</p><p class="step-text">What the home should be, and why.</p></div>
-        <div class="step"><p class="step-title">We prepare you</p><p class="step-text">Documents, costs and steps in that country.</p></div>
-        <div class="step"><p class="step-title">We introduce you</p><p class="step-text">To a partner on the ground we trust.</p></div>
+        <div class="step"><p class="step-title">We listen</p><p class="step-text">What you want, and why.</p></div>
+        <div class="step"><p class="step-title">We prepare you</p><p class="step-text">The documents, costs and steps.</p></div>
+        <div class="step"><p class="step-title">We introduce you</p><p class="step-text">A trusted partner on the ground.</p></div>
         <div class="step"><p class="step-title">We stay with you</p><p class="step-text">Until the keys are in your hand.</p></div>
       </div>
     </div>

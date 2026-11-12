@@ -134,9 +134,9 @@ a.trio-item:hover .trio-title { font-style: italic; }
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px 48px; }
 .step { border-top: 1px solid var(--aubergine); padding-top: 28px; }
 .world-sell .step { border-top-color: var(--champagne); }
-.step-title { font-size: 17px; font-weight: 500; margin-bottom: 10px; }
-.step-text { font-size: 15px; line-height: 1.7; }
-.world-buy .step-text { color: var(--muted); }
+.step-title { font-size: 19px; font-weight: 500; margin-bottom: 10px; }
+.step-text { font-size: 17px; line-height: 1.6; }
+.world-buy .step-text { color: #4A3A4D; }
 .world-sell .step-text { color: var(--lilac-pale); }
 
 /* Photo slots (placeholders until real photography arrives) */
@@ -202,17 +202,17 @@ a.trio-item:hover .trio-title { font-style: italic; }
 .gate-mark { align-self: flex-start; font-family: var(--serif); font-weight: 500; font-size: 24px; color: var(--aubergine); }
 .gate-place { align-self: flex-end; color: var(--lilac); }
 .gate-line { font-family: var(--serif); font-weight: 300; font-size: clamp(44px, 6.2vw, 96px); line-height: 1; letter-spacing: -0.015em; }
-.gate-cta { display: flex; flex-direction: column; gap: 10px; height: 76px; justify-content: flex-end; }
+.gate-cta { display: flex; flex-direction: column; gap: 12px; height: 92px; justify-content: flex-end; }
 .gate-buy .gate-cta { align-items: flex-end; }
-.gate-buy .gate-cta .label { color: var(--muted-2); }
-.gate-sell .gate-cta .label { color: var(--lilac); }
+.gate-buy .gate-cta .label { color: var(--aubergine); }
+.gate-sell .gate-cta .label { color: var(--champagne); }
 .gate-go {
-  font-family: var(--serif); font-style: italic; font-size: 28px; padding-bottom: 4px; border-bottom: 1px solid currentColor;
-  opacity: 0.72; transition: opacity 700ms ease, transform 700ms ease;
+  font-family: var(--serif); font-style: italic; font-size: clamp(30px, 2.6vw, 36px); font-weight: 400; padding-bottom: 4px; border-bottom: 1px solid currentColor;
+  transition: transform 700ms ease, border-color 700ms ease;
 }
 .gate-buy .gate-go { color: var(--aubergine); }
-.gate-sell .gate-go { color: var(--champagne); }
-.gate-side:hover .gate-go, .gate-side:focus-visible .gate-go { opacity: 1; transform: translateY(-3px); }
+.gate-sell .gate-go { color: #F2E6D0; }
+.gate-side:hover .gate-go, .gate-side:focus-visible .gate-go { transform: translateY(-3px); border-bottom-width: 2px; }
 @media (max-width: 760px) {
   .gate-side { padding: 28px 24px; }
 }
