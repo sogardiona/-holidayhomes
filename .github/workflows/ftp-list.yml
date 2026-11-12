@@ -1,7 +1,7 @@
-name: FTP folder check
+name: FTP cleanup (one-off)
 on: workflow_dispatch
 jobs:
-  list:
+  clean:
     runs-on: ubuntu-latest
     steps:
       - run: sudo apt-get install -y -qq lftp >/dev/null
@@ -9,7 +9,5 @@ jobs:
           S: ${{ secrets.FTP_SERVER }}
           U: ${{ secrets.FTP_USERNAME }}
           P: ${{ secrets.FTP_PASSWORD }}
-          D: ${{ secrets.FTP_DIR }}
         run: |
-          echo "FTP_DIR has $(echo -n "$D" | wc -c) chars; starts with slash: $([ "${D#/}" != "$D" ] && echo yes || echo no); contains public_html: $(echo "$D" | grep -q public_html && echo yes || echo no); contains test: $(echo "$D" | grep -q test && echo yes || echo no)"
-          lftp -u "$U","$P" -e "set ssl:verify-certificate no; pwd; echo '--- root'; cls -la; echo '--- test/'; cls -la test/; echo '--- public_html/'; cls -la public_html/; echo '--- public_html/test/'; cls -la public_html/test/; bye" "$S" 2>&1 | sed "s/$U/USER/g"
+          lftp -u "$U","$P" -e "set ssl:verify-certificate no; rm -r public_html/; echo '--- root now'; cls -la; bye" "$S"

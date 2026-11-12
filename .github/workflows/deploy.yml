@@ -8,21 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Resolve target folder
-        id: dir
-        env:
-          FTP_DIR: ${{ secrets.FTP_DIR }}
-        run: |
-          d="${FTP_DIR:-./}"
-          case "$d" in */) ;; *) d="$d/";; esac
-          echo "path=$d" >> "$GITHUB_OUTPUT"
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ steps.dir.outputs.path }}
+          server-dir: test/   # the FTP account starts in public_html; test.holidayhomes.lu serves public_html/test
           exclude: |
             **/.git*
             **/.git*/**
