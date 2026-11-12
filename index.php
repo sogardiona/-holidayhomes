@@ -1,11 +1,26 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>holidayhomes.lu</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#4A1F4F;color:#E7D8BE;font-family:Georgia,serif;font-size:28px}</style>
-</head>
-<body>holidayhomes.lu · deploy test <?php echo date('Y-m-d H:i'); ?></body>
+<?php
+$world = 'gate';
+$page_title = 'holidayhomes.lu · The home for your home abroad';
+$page_description = 'For people in Luxembourg buying a home abroad, or selling the one they already own.';
+require __DIR__ . '/includes/head.php';
+?>
+<main class="gate">
+  <a class="gate-side gate-buy" href="/buy/">
+    <span class="gate-mark"><?= e(SITE['name']) ?></span>
+    <span class="gate-line">The home for</span>
+    <span class="gate-cta">
+      <span class="label">I am looking</span>
+      <span class="gate-go">Find yours</span>
+    </span>
+  </a>
+  <a class="gate-side gate-sell" href="/sell/">
+    <span class="gate-place label"><?= e(SITE['place']) ?></span>
+    <span class="gate-line">your home abroad</span>
+    <span class="gate-cta">
+      <span class="label">I own one</span>
+      <span class="gate-go">Get its best value</span>
+    </span>
+  </a>
+</main>
+</body>
 </html>

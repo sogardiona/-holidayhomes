@@ -1,5 +1,17 @@
 DirectoryIndex index.php index.html
+Options -Indexes
 
+# Test site: keep search engines out (remove at launch)
 <IfModule mod_headers.c>
 Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+
+# Shared PHP parts are not pages
+RedirectMatch 404 ^/includes/
+
+# Long cache for fonts; CSS is versioned by file date in the URL
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType font/woff2 "access plus 1 year"
+ExpiresByType text/css "access plus 1 year"
 </IfModule>
