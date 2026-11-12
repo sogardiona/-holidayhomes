@@ -9,19 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Collect site files only
+        run: |
+          mkdir -p "$RUNNER_TEMP/site"
+          rsync -a --exclude '.git' --exclude '.git*' --exclude '.github' --exclude 'README.md' ./ "$RUNNER_TEMP/site/"
+          find "$RUNNER_TEMP/site" -type f | sed "s|$RUNNER_TEMP/site/||"
       - run: sudo apt-get install -y -qq lftp >/dev/null
-      - name: Upload via FTP (mirror into public_html/test)
+      - name: Upload via FTP into public_html/test
+        # The FTP account starts in public_html; test.holidayhomes.lu serves public_html/test.
         env:
           S: ${{ secrets.FTP_SERVER }}
           U: ${{ secrets.FTP_USERNAME }}
           P: ${{ secrets.FTP_PASSWORD }}
-        # The FTP account starts in public_html; test.holidayhomes.lu serves public_html/test.
         run: |
-          lftp -u "$U","$P" "$S" -e "
-            set ssl:verify-certificate no;
-            set net:max-retries 5; set net:reconnect-interval-base 3; set net:timeout 20;
-            mirror -R --delete --verbose=1 --parallel=2
-              --exclude-glob .git* --exclude-glob .github/ --exclude-glob README.md
-              --exclude-glob .ftp-deploy-sync-state.json
-              ./ test/;
-            bye"
+          lftp -u "$U","$P" "$S" -e "set ssl:verify-certificate no; set net:max-retries 5; set net:reconnect-interval-base 3; set net:timeout 20; set cmd:fail-exit no; rm -r -f test/.git test/.github; rm -f test/README.md test/.ftp-deploy-sync-state.json; set cmd:fail-exit yes; mirror -R --delete --verbose=1 $RUNNER_TEMP/site/ test/; echo '--- now on server'; cls -a test/; bye"
