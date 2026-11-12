@@ -3,20 +3,25 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+concurrency: deploy
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Upload via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: test/   # the FTP account starts in public_html; test.holidayhomes.lu serves public_html/test
-          exclude: |
-            **/.git*
-            **/.git*/**
-            .github/**
-            README.md
+      - run: sudo apt-get install -y -qq lftp >/dev/null
+      - name: Upload via FTP (mirror into public_html/test)
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
+        # The FTP account starts in public_html; test.holidayhomes.lu serves public_html/test.
+        run: |
+          lftp -u "$U","$P" "$S" -e "
+            set ssl:verify-certificate no;
+            set net:max-retries 5; set net:reconnect-interval-base 3; set net:timeout 20;
+            mirror -R --delete --verbose=1 --parallel=2
+              --exclude-glob .git* --exclude-glob .github/ --exclude-glob README.md
+              --exclude-glob .ftp-deploy-sync-state.json
+              ./ test/;
+            bye"
